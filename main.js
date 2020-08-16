@@ -1,18 +1,39 @@
+class sentence{
+    constructor(str, lineNum){
+        this.sentenceStr = str;
+        this.lineNum = lineNum;
+        this.classes = new Set();
+    }
+
+    addClass(str){
+        this.classes.add(str);
+    }
+
+    deleteClass(str){
+        this.classes.delete(str);
+    }
+}
+
+var sentences = new Array();
+
 function loadOriginal(input){
-    console.log(input.files[0]);
     let file = input.files[0];
     let reader = new FileReader();
-    let idElement = document.getElementById('parent');
+    let idElement = document.getElementById('sentenceParent');
     reader.readAsText(file);
     reader.onload = () => {
         let lines = splitText(reader.result)
-        console.log(lines);
+        let linesNum = lines.length;
+        for(let i=0; i<linesNum; i++){
+            sentences.push(new sentence(lines[i], i));
+        }
+        console.log(sentences);
 
-        for(let i=0; i<lines.length; i++){
+        for(const s of sentences){
             let onelineText = document.createElement('div');
-            onelineText.id = 'line' + i.toString();
+            onelineText.id = 'line' + s.lineNum.toString();
             onelineText.className = 'line';
-            onelineText.innerHTML = '| ' + ('0000' + i.toString()).substr(-4) + ' | ' + lines[i];
+            onelineText.innerHTML = makeLineNumber(s.lineNum, linesNum) + ' | ' + s.sentenceStr;
             idElement.appendChild(onelineText);
         }
     };
@@ -22,4 +43,14 @@ function loadOriginal(input){
 function splitText(rawtext){
     var lines = rawtext.split('\n');
     return lines;
+}
+
+function makeLineNumber(num, linesNum){
+    let digits = linesNum.toString().length;
+    let numstr = "";
+    for(let i=num.toString().length; i<digits; i++){
+        numstr += '&nbsp';
+    }
+    numstr += num.toString();
+    return numstr;
 }
