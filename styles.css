@@ -1,3 +1,8 @@
 .textarea{
-    white-space : nowrap
+    white-space : space;
+}
+
+.lineNum{
+    text-align: right;
+    vertical-align: top;
 }
