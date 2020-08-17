@@ -66,7 +66,7 @@ function loadOriginal(input){
 function drawLine(s){
     // console.log(s);
     let idElement = document.getElementById(s.id);
-    idElement.className = null;
+    idElement.className = "";
     for(let c of s.classes){
         idElement.classList.add(c);
     }
@@ -79,6 +79,7 @@ function drawText(){
     let idElement = document.getElementById('sentenceParent');
     idElement.textContent = null;
     let table = document.createElement('table')             //テーブル作成
+    table.id = 'lines';
     for(let s of sentences){                                //作ったsentencesから一文ずつ取り出してテーブルを作る
         let tr = table.insertRow();                         //trタグ追加
         tr.id = 'line' + s.lineNum.toString();
@@ -119,4 +120,44 @@ function makeLineNumber(num, linesNum){
     }
     numstr += num.toString();
     return numstr;
+}
+
+/**
+ * json形式で編集データを出力する。
+ */
+function outputJson(){
+    let elements = document.getElementsByClassName('line');
+    let out = [];
+    for(let e of elements){
+        let outmap = new Map();
+        outmap.set('lineNumber', Number(e.getElementsByTagName('td')[0].innerHTML));
+        outmap.set('classes', e.className);
+        outmap.set('sentence', String(e.getElementsByTagName('td')[1].innerHTML));
+        out.push([...outmap]);
+    }
+    let downloadData = JSON.stringify([...out]);
+    let blob = new Blob([downloadData], { "type" : "text/plain" });
+    document.getElementById("output").href = window.URL.createObjectURL(blob);
+    console.log(downloadData);
+}
+
+
+/**
+ * Mapを気合でStringにする。使ってない。
+ * WARNING: 文字列中にダブルクオートとかあったら使えない。
+ * @param {Map} map 
+ * @return String
+ */
+function mapToString(map){
+    let str = new String();
+    str += "{";
+    for(let [key, value] of map){
+        str += "\"" + String(key) + "\"";
+        str += ":";
+        str += "\"" + String(value);
+        str += ","
+    }
+    str = str.slice(0, -1);
+    str += "}";
+    return str;
 }

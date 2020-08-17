@@ -11,6 +11,7 @@
 <body>
     <h1>onelines_reader</h1>
     <input type="file" name="text" accept="text/plain", onchange="loadOriginal(this)">
+    <a id="output" href="" download="onelines.json" onclick="outputJson()">保存</a>
     <p>
         <div id="sentenceParent"></div>
     </p>
