@@ -19,6 +19,19 @@ class sentence{
     deleteClass(str){
         this.classes.delete(str);
     }
+
+    /**
+     * 選択してるかしてないかクラスを設定。
+     * NOTE: addEventListenerの使い方がよくわからなかったため、無理やりこのようにしている。
+     */
+    static select(){
+        console.log(this._this);
+        if(this._this.classes.has('selected')){
+            this._this.deleteClass('selected');
+        }else{
+            this._this.addClass('selected');
+        }
+    }
 }
 
 /** 文章 一文の配列*/
@@ -26,7 +39,7 @@ var sentences = new Array();
 
 /**
  * 生テキストファイルを読み込む。
- * @param input onchange()のときのthis
+ * @param input onchangeのときのthis
  */
 function loadOriginal(input){
     let file = input.files[0];
@@ -41,19 +54,19 @@ function loadOriginal(input){
         }
         // console.log(sentences);
         let table = document.createElement('table')             //テーブル作成
-        for(const s of sentences){                              //作ったsentencesから一文ずつ取り出してテーブルを作る
-            let onelineText = table.insertRow();                //trタグ追加
-            onelineText.id = 'line' + s.lineNum.toString();
-            onelineText.className = 'line';
-            let td = onelineText.insertCell();                  //tdタグ追加
+        for(let s of sentences){                              //作ったsentencesから一文ずつ取り出してテーブルを作る
+            let tr = table.insertRow();                         //trタグ追加
+            tr.id = 'line' + s.lineNum.toString();
+            tr.className = 'line';
+            tr.addEventListener('click', {_this: s, handleEvent: sentence.select}, false);
+            let td = tr.insertCell();                           //tdタグ追加
             td.classList.add('lineNum');
             td.innerHTML = s.lineNum;
-            td = onelineText.insertCell();                      //tdタグ追加
+            td = tr.insertCell();                               //tdタグ追加
             td.innerHTML = s.sentenceStr;
         }
         idElement.appendChild(table);                           //作ったテーブルを子要素として追加
     };
-    
 }
 
 /**
