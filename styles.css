@@ -6,3 +6,7 @@
     text-align: right;
     vertical-align: top;
 }
+
+.selected{
+    background-color: darkseagreen;
+}
