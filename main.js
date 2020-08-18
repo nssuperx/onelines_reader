@@ -91,3 +91,41 @@ function outputJson(){
 function toggleLineSelect(){
     this.classList.toggle('selected');
 }
+
+/**
+ * 文にタグ（クラス）をつける
+ */
+function classSet(){
+    let settings = document.getElementsByClassName('setting');
+    let selectedLines = document.getElementsByClassName('selected');
+    for(let setting of settings){
+        if(setting.checked){
+            for(let line of selectedLines){
+                line.classList.add(setting.value);
+            }
+        }else{
+            for(let line of selectedLines){
+                line.classList.remove(setting.value);
+            }
+        }
+
+    }
+}
+
+/**
+ * 文の表示非表示
+ */
+function showVisibleLine(){
+    let visibleFlags = document.getElementsByClassName('visibleFlag');
+    let lines = document.getElementsByClassName('line');
+    for(let l of lines){
+        for(let v of visibleFlags){
+            if(v.checked && l.classList.contains(v.value)){
+                l.hidden = false;
+                break;
+            }else{
+                l.hidden = true;
+            }
+        }
+    }
+}

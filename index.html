@@ -18,4 +18,39 @@
     </p>
     <a href="https://github.com/nssuperx/onelines_reader">このページのリポジトリ</a>
 </body>
+    <div class="footerBottom">
+        <table>
+            <tr>
+                <td>
+                    メニュー
+                </td>
+                <td>
+                    <form>
+                        <input class="setting" type="checkbox" value="explanation">説明文
+                        <input class="setting" type="checkbox" value="interpretation">解釈
+                        <input class="setting" type="checkbox" value="fact">事実
+                        <input class="setting" type="checkbox" value="what">疑問文
+                        <input class="setting" type="checkbox" value="assertion">著者の主張
+                        <input id="classSettingBtn" type="button" value="設定" onclick="classSet(this)">
+                    </form>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    表示
+                </td>
+                <td>
+                    <form>
+                        <input class="visibleFlag" type="checkbox" value="explanation" onchange="showVisibleLine(this)" checked>説明文
+                        <input class="visibleFlag" type="checkbox" value="interpretation" onchange="showVisibleLine(this)" checked>解釈
+                        <input class="visibleFlag" type="checkbox" value="fact" onchange="showVisibleLine(this)" checked>事実
+                        <input class="visibleFlag" type="checkbox" value="what" onchange="showVisibleLine(this)" checked>疑問文
+                        <input class="visibleFlag" type="checkbox" value="assertion" onchange="showVisibleLine(this)" checked>著者の主張
+                        <input class="visibleFlag" type="checkbox" value="line" onchange="showVisibleLine(this)" checked>全表示
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
 </html>

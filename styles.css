@@ -10,3 +10,17 @@
 .selected{
     background-color: darkseagreen;
 }
+
+body{
+    padding-bottom: 70px;
+}
+
+.footerBottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: thistle;
+    z-index: 10;
+}
