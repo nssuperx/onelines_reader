@@ -37,6 +37,11 @@ class sentence{
     }
 }
 
+function toggleLineSelect(){
+    console.log(this);
+    this.classList.toggle('selected');
+}
+
 /** 文章 一文の配列*/
 var sentences = new Array();
 
@@ -120,6 +125,31 @@ function makeLineNumber(num, linesNum){
     }
     numstr += num.toString();
     return numstr;
+}
+
+function inputJson(input){
+    let file = input.files[0];
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = () => {
+        let text = JSON.parse(reader.result);
+        let idElement = document.getElementById('sentenceParent');
+        idElement.textContent = null;
+        let table = document.createElement('table')             //テーブル作成
+        table.id = 'lines';
+        for(let t of text){
+            let tr = table.insertRow();                         //trタグ追加
+            tr.id = 'line' + t[0][1].toString();
+            tr.className = t[1][1];
+            tr.addEventListener('click', toggleLineSelect, false);
+            let td = tr.insertCell();                           //tdタグ追加
+            td.classList.add('lineNum');
+            td.innerHTML = t[0][1].toString();
+            td = tr.insertCell();                               //tdタグ追加
+            td.innerHTML = t[2][1];
+        }
+        idElement.appendChild(table);                           //作ったテーブルを子要素として追加
+    };
 }
 
 /**
